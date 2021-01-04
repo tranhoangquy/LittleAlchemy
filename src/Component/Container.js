@@ -22,7 +22,7 @@ const styles = {
 
 };
 export const Container = ({ hideSourceOnDrag }) => {
-    const alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    const alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X'];
     const listAlpha = alphabets.map((alphabet) =>
         <li key={alphabet} style={{ paddingBottom: "5px", color: "#938671", borderLeft: "3px solid white" }}>{alphabet}</li>
     );
@@ -52,7 +52,7 @@ export const Container = ({ hideSourceOnDrag }) => {
             for (let i = 0; i < boxdroped.length; i++) {
                 if (boxdroped[i].src === img04 && (boxdroped[i].top - top) <= 0 && (boxdroped[i].left - left) <= 20) {
                     setBoxdroped(update(boxdroped, { $push: [{ top, left, src: img05, name: "Sea", key }], $splice: [[i, 1]] }));
-                    setBoxes(update(boxes, { $push: [{ top:240, left:20, src: img05, name: "Sea", key }] }));
+                    setBoxes(update(boxes, { $push: [{ top: 240, left: 20, src: img05, name: "Sea", key }] }));
                 }
             }
         }
@@ -60,7 +60,7 @@ export const Container = ({ hideSourceOnDrag }) => {
             for (let i = 0; i < boxdroped.length; i++) {
                 if (boxdroped[i].src === img03 && (boxdroped[i].top - top) <= 0 && (boxdroped[i].left - left) <= 20) {
                     setBoxdroped(update(boxdroped, { $push: [{ top, left, src: img06, name: "Lava", key }], $splice: [[i, 1]] }));
-                    setBoxes(update(boxes, { $push: [{ top:300, left:20, src: img06, name: "Lava", key }] }));
+                    setBoxes(update(boxes, { $push: [{ top: 300, left: 20, src: img06, name: "Lava", key }] }));
                 }
             }
         }
@@ -68,7 +68,7 @@ export const Container = ({ hideSourceOnDrag }) => {
             for (let i = 0; i < boxdroped.length; i++) {
                 if (boxdroped[i].src === img02 && (boxdroped[i].top - top) <= 0 && (boxdroped[i].left - left) <= 20) {
                     setBoxdroped(update(boxdroped, { $push: [{ top, left, src: img06, name: "Lava", key }], $splice: [[i, 1]] }));
-                    setBoxes(update(boxes, { $push: [{ top:300, left:20, src: img06, name: "Lava", key }] }));
+                    setBoxes(update(boxes, { $push: [{ top: 300, left: 20, src: img06, name: "Lava", key }] }));
                 }
             }
         }
@@ -76,7 +76,7 @@ export const Container = ({ hideSourceOnDrag }) => {
             for (let i = 0; i < boxdroped.length; i++) {
                 if (boxdroped[i].src === img05 && (boxdroped[i].top - top) <= 0 && (boxdroped[i].left - left) <= 20) {
                     setBoxdroped(update(boxdroped, { $push: [{ top, left, src: img08, name: "Ocean", key }], $splice: [[i, 1]] }));
-                    setBoxes(update(boxes, { $push: [{ top:360, left:20, src: img08, name: "Ocean", key }]}));
+                    setBoxes(update(boxes, { $push: [{ top: 360, left: 20, src: img08, name: "Ocean", key }] }));
                 }
             }
         }
@@ -138,7 +138,7 @@ export const Container = ({ hideSourceOnDrag }) => {
                 }
             </div>
             <div className="icons" id="icons">
-                
+
                 <div className="icon iconSMenu" id="menu" src="../img/iconMenu.png"></div>
             </div>
         </>
