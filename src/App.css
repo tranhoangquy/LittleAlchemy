@@ -1,0 +1,28 @@
+.App {
+  text-align: center;
+  display: flex;
+  overflow: hidden;
+  height: 100%;
+}
+.side {
+  width: 250px;
+  height: 100%;
+  border: 1px solid #f7f1e7;
+  background-image: url(https://littlealchemy.com/img/library-background.png);
+}
+.element {
+  display: flex;
+  margin-left: 10px;
+}
+.elementName {
+  padding: 25px 8px;
+}
+.iconMenu {
+  background-image: url("./img/iconMenu.png");
+  width: 32px;
+  height: 32px;
+  z-index: 1000;
+  cursor: pointer;
+  position: absolute;
+  bottom: 0px;
+}
