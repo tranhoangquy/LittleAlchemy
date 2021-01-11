@@ -4,6 +4,7 @@ import { useDrop } from 'react-dnd'
 import { ItemTypes } from './ItemTypes'
 import { Box } from './Box'
 import update from 'immutability-helper'
+import 'lodash'
 import img01 from '../img/iconAir.png'
 import img02 from '../img/iconEarth.png'
 import img03 from '../img/iconFire.png'
@@ -78,216 +79,54 @@ export const Container = ({ hideSourceOnDrag }) => {
             return undefined
         },
     })
-
-    const moveBox = (
-        id,
-        left,
-        top,
-        src,
-        name,
-        key,
-        topdefault,
-        leftdefault
-    ) => {
+    const duplicateItem = (left, top, imageIngre, name, key, imageCreate) => {
+        let imgDuplicate = _.find(boxdroped, { src: imageIngre })
+        if (imgDuplicate !== undefined) {
+            if (imgDuplicate.top - top <= 0 && imgDuplicate.left - left <= 20) {
+                setBoxdroped(
+                    update(boxdroped, {
+                        $push: [{ left, top, src: imageCreate, name, key }],
+                        $splice: [
+                            [
+                                _.findIndex(boxdroped, { id: imgDuplicate.id }),
+                                1,
+                            ],
+                        ],
+                    })
+                )
+                setBoxes(
+                    update(boxes, {
+                        $push: [
+                            {
+                                top: boxes[boxes.length - 1].top + 60,
+                                left: +20,
+                                src: imageCreate,
+                                name,
+                                key,
+                            },
+                        ],
+                    })
+                )
+            }
+        }
+    }
+    const moveBox = (id, left, top, src, name, key) => {
         setBoxdroped(
-            update(boxdroped, { $push: [{ left, top, src, name, key }] })
+            update(boxdroped, {
+                $push: [{ id, left, top, src, name, key }],
+            })
         )
+        switch (src) {
+            case img04:
+                duplicateItem(left, top, img04, 'Sea', key, img05)
+                duplicateItem(left, top, img03, 'Steam', key, img09)
+                duplicateItem(left, top, img02, 'Mud', key, img07)
+                break
 
-        if (src === img04) {
-            for (let i = 0; i < boxdroped.length; i++) {
-                if (
-                    boxdroped[i].src === img04 &&
-                    boxdroped[i].top - top <= 0 &&
-                    boxdroped[i].left - left <= 20
-                ) {
-                    setBoxdroped(
-                        update(boxdroped, {
-                            $push: [
-                                { top, left, src: img05, name: 'Sea', key },
-                            ],
-                            $splice: [[i, 1]],
-                        })
-                    )
-                    setBoxes(
-                        update(boxes, {
-                            $push: [
-                                {
-                                    top: 240,
-                                    left: 20,
-                                    src: img05,
-                                    name: 'Sea',
-                                    key,
-                                },
-                            ],
-                        })
-                    )
-                }
-            }
-        }
-        if (src === img02) {
-            for (let i = 0; i < boxdroped.length; i++) {
-                if (
-                    boxdroped[i].src === img03 &&
-                    boxdroped[i].top - top <= 0 &&
-                    boxdroped[i].left - left <= 20
-                ) {
-                    setBoxdroped(
-                        update(boxdroped, {
-                            $push: [
-                                { top, left, src: img06, name: 'Lava', key },
-                            ],
-                            $splice: [[i, 1]],
-                        })
-                    )
-                    setBoxes(
-                        update(boxes, {
-                            $push: [
-                                {
-                                    top: 300,
-                                    left: 20,
-                                    src: img06,
-                                    name: 'Lava',
-                                    key,
-                                },
-                            ],
-                        })
-                    )
-                }
-            }
-        }
-        if (src === img03) {
-            for (let i = 0; i < boxdroped.length; i++) {
-                if (
-                    boxdroped[i].src === img02 &&
-                    boxdroped[i].top - top <= 0 &&
-                    boxdroped[i].left - left <= 20
-                ) {
-                    setBoxdroped(
-                        update(boxdroped, {
-                            $push: [
-                                { top, left, src: img06, name: 'Lava', key },
-                            ],
-                            $splice: [[i, 1]],
-                        })
-                    )
-                    setBoxes(
-                        update(boxes, {
-                            $push: [
-                                {
-                                    top: 300,
-                                    left: 20,
-                                    src: img06,
-                                    name: 'Lava',
-                                    key,
-                                },
-                            ],
-                        })
-                    )
-                }
-            }
-        }
-        if (src === img05) {
-            for (let i = 0; i < boxdroped.length; i++) {
-                if (
-                    boxdroped[i].src === img05 &&
-                    boxdroped[i].top - top <= 0 &&
-                    boxdroped[i].left - left <= 20
-                ) {
-                    setBoxdroped(
-                        update(boxdroped, {
-                            $push: [
-                                { top, left, src: img08, name: 'Ocean', key },
-                            ],
-                            $splice: [[i, 1]],
-                        })
-                    )
-                    setBoxes(
-                        update(boxes, {
-                            $push: [
-                                {
-                                    top: 360,
-                                    left: 20,
-                                    src: img08,
-                                    name: 'Ocean',
-                                    key,
-                                },
-                            ],
-                        })
-                    )
-                }
-            }
-        }
-        if (src === img02) {
-            for (let i = 0; i < boxdroped.length; i++) {
-                if (
-                    boxdroped[i].src === img04 &&
-                    boxdroped[i].top - top <= 0 &&
-                    boxdroped[i].left - left <= 20
-                ) {
-                    setBoxdroped(
-                        update(boxdroped, {
-                            $push: [
-                                { top, left, src: img07, name: 'Mud', key },
-                            ],
-                            $splice: [[i, 1]],
-                        })
-                    )
-                }
-            }
-        }
-        if (src === img04) {
-            for (let i = 0; i < boxdroped.length; i++) {
-                if (
-                    boxdroped[i].src === img02 &&
-                    boxdroped[i].top - top <= 0 &&
-                    boxdroped[i].left - left <= 20
-                ) {
-                    setBoxdroped(
-                        update(boxdroped, {
-                            $push: [
-                                { top, left, src: img07, name: 'Mud', key },
-                            ],
-                            $splice: [[i, 1]],
-                        })
-                    )
-                }
-            }
-        }
-        if (src === img03) {
-            for (let i = 0; i < boxdroped.length; i++) {
-                if (
-                    boxdroped[i].src === img04 &&
-                    boxdroped[i].top - top <= 0 &&
-                    boxdroped[i].left - left <= 20
-                ) {
-                    setBoxdroped(
-                        update(boxdroped, {
-                            $push: [
-                                { top, left, src: img09, name: 'Steam', key },
-                            ],
-                            $splice: [[i, 1]],
-                        })
-                    )
-                }
-            }
-        }
-        if (src === img04) {
-            for (let i = 0; i < boxdroped.length; i++) {
-                if (
-                    boxdroped[i].src === img03 &&
-                    boxdroped[i].top - top <= 0 &&
-                    boxdroped[i].left - left <= 20
-                ) {
-                    setBoxdroped(
-                        update(boxdroped, {
-                            $push: [
-                                { top, left, src: img09, name: 'Steam', key },
-                            ],
-                            $splice: [[i, 1]],
-                        })
-                    )
-                }
-            }
+            case img02:
+                duplicateItem(left, top, img04, 'Mud', key, img07)
+                duplicateItem(left, top, img03, 'Lava', key, img06)
+                break
         }
     }
     return (
