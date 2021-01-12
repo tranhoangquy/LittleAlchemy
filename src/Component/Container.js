@@ -15,7 +15,7 @@ import img07 from '../img/iconMud.png'
 import img08 from '../img/iconOcean.png'
 import img09 from '../img/iconSteam.png'
 import { Icon } from './Icon'
-
+// git merge --abortgit merge --abortgit merge --abortgit merge --abortgit merge --abortgit merge --abort
 const styles = {
     width: '100%',
     backgroundImage:
@@ -61,7 +61,11 @@ export const Container = ({ hideSourceOnDrag }) => {
             {alphabet}
         </li>
     ))
+
+    //mảng chứa item drop
     const [boxdroped, setBoxdroped] = useState([])
+
+    //mảng chứa item drag
     const [boxes, setBoxes] = useState([
         { top: 10, left: 20, src: img01, key: 1, name: 'air' },
         { top: 60, left: 20, src: img02, key: 2, name: 'earht' },
@@ -69,6 +73,7 @@ export const Container = ({ hideSourceOnDrag }) => {
         { top: 180, left: 20, src: img04, key: 4, name: 'warter' },
     ])
 
+    //drop item theo tọa độ
     const [, drop] = useDrop({
         accept: ItemTypes.BOX,
         drop(item, monitor) {
@@ -79,6 +84,50 @@ export const Container = ({ hideSourceOnDrag }) => {
             return undefined
         },
     })
+    const duplicateItem = (left, top, imageIngre, name, key, imageCreate) => {
+        let imgDuplicate = _.find(boxdroped, { src: imageIngre })
+        if (imgDuplicate !== undefined) {
+            if (imgDuplicate.top - top <= 0 && imgDuplicate.left - left <= 20) {
+                setBoxdroped(
+                    update(boxdroped, {
+                        $merge: {
+                            top: imgDuplicate.top,
+                            left: imgDuplicate.left,
+                        },
+                    })
+                )
+            }
+
+            setBoxdroped(
+                update(boxdroped, {
+                    $push: [{ left, top, src: imageCreate, name, key }],
+                    $splice: [
+                        [_.findIndex(boxdroped, { id: imgDuplicate.id }), 1],
+                    ],
+                })
+            )
+            console.log(boxdroped)
+            setBoxes(
+                update(boxes, {
+                    // [name]: {
+                    $push: [
+                        {
+                            top: boxes[boxes.length - 1].top + 60,
+                            left: +20,
+                            src: imageCreate,
+                            name,
+                            key,
+                        },
+                    ],
+                    // },
+                })
+            )
+            console.log(boxes)
+        }
+    }
+
+<<<<<<< HEAD
+    //xử lý 2 item trùng tọa độ
     const duplicateItem = (left, top, imageIngre, name, key, imageCreate) => {
         let imgDuplicate = _.find(boxdroped, { src: imageIngre })
         if (imgDuplicate !== undefined) {
@@ -110,6 +159,10 @@ export const Container = ({ hideSourceOnDrag }) => {
             }
         }
     }
+
+    //cập nhật phần tử được drop
+=======
+>>>>>>> 1b6c8127766d661de3c6063ad68f7ed311137084
     const moveBox = (id, left, top, src, name, key) => {
         setBoxdroped(
             update(boxdroped, {
@@ -121,14 +174,32 @@ export const Container = ({ hideSourceOnDrag }) => {
                 duplicateItem(left, top, img04, 'Sea', key, img05)
                 duplicateItem(left, top, img03, 'Steam', key, img09)
                 duplicateItem(left, top, img02, 'Mud', key, img07)
+<<<<<<< HEAD
+                duplicateItem(left, top, img05, 'Ocean', key, img08)
+=======
+>>>>>>> 1b6c8127766d661de3c6063ad68f7ed311137084
                 break
 
             case img02:
                 duplicateItem(left, top, img04, 'Mud', key, img07)
                 duplicateItem(left, top, img03, 'Lava', key, img06)
                 break
+<<<<<<< HEAD
+            case img03:
+                duplicateItem(left, top, img02, 'Lava', key, img06)
+                duplicateItem(left, top, img04, 'Steam', key, img09)
         }
     }
+
+=======
+            // case img05:
+            //     duplicateItem(left, top, img04, 'Ocean', key, img08)
+            //     duplicateItem(left, top, img05, 'Ocean', key, img08)
+            //     break
+        }
+    }
+    console.log(boxes)
+>>>>>>> 1b6c8127766d661de3c6063ad68f7ed311137084
     return (
         <>
             <div className="side">
@@ -137,7 +208,6 @@ export const Container = ({ hideSourceOnDrag }) => {
                         return (
                             <Box
                                 key={e.key}
-                                id={e.key}
                                 left={e.left}
                                 top={e.top}
                                 src={e.src}
